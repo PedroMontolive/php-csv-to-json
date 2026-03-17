@@ -1,0 +1,19 @@
+{
+    "name": "emanuel/php-csv-to-json",
+    "description": "CLI tool that reads a product/client CSV, validates required fields line by line, handles errors gracefully and exports a clean, formatted JSON. Pure PHP, no frameworks.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Emanuel\\PhpCsvToJson\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "PedroMontolive",
+            "email": "pedro.montolive@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    }
+}
