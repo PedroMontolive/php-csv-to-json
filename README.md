@@ -108,6 +108,9 @@ Or directly with PHPUnit:
 ```
 php-csv-to-json/
 ├── src/
+│   ├── Exception/
+│   │   ├── FileNotReadableException.php
+│   │   └── JsonEncodingException.php
 │   ├── Parser.php        # reads CSV and maps rows to associative arrays
 │   ├── Validator.php     # checks required fields per row, collects errors
 │   └── Exporter.php      # encodes valid rows and errors to formatted JSON
@@ -119,6 +122,7 @@ php-csv-to-json/
 │   ├── ValidatorTest.php
 │   └── ExporterTest.php
 ├── run.php               # CLI entry point
+├── phpunit.xml
 └── composer.json
 ```
 
@@ -129,6 +133,8 @@ php-csv-to-json/
 **Errors don't stop the process.** If row 5 is invalid, rows 1–4 and 6–N are still exported. Invalid rows are collected and reported at the end via `stderr`. This makes the tool useful in real data pipelines where partial output is better than no output.
 
 **`stdout` for data, `stderr` for errors.** This is standard Unix convention and means the tool composes well with other CLI tools — you can pipe the JSON output without worrying about error messages mixed in.
+
+**Parser failures are reported separately.** If a row has a different number of columns than the header (e.g. a malformed line), it is skipped by the parser before validation even runs. A `Warning:` message is written to `stderr` with the affected line numbers so nothing is silently lost.
 
 **No dependencies beyond PHPUnit.** The parsing, validation, and export logic uses only PHP's native SPL and built-in functions. Understanding the language before reaching for a library is the whole point.
 
